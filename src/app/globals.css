@@ -21,6 +21,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 50px;
 }
 
 body {
@@ -300,6 +301,7 @@ nav {
 /* Section Styling */
 section {
   padding: 100px 2rem;
+  scroll-margin-top: 50px;
 }
 
 .section-title {
@@ -396,11 +398,18 @@ section {
 
 .portfolio-item {
   position: relative;
-  overflow: hidden;
-  aspect-ratio: 1;
   cursor: pointer;
   border: 1px solid rgba(212, 175, 55, 0.1);
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--dark-gray);
+}
+
+.portfolio-item > *:first-child {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
 }
 
 .portfolio-image {
@@ -476,6 +485,31 @@ section {
   background: var(--dark-gray);
   color: rgba(255, 248, 231, 0.5);
   font-style: italic;
+}
+
+.portfolio-title-bar {
+  background: var(--dark-gray);
+  padding: 1rem 1.25rem;
+  border-top: 2px solid var(--gold);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.portfolio-title-bar h4 {
+  font-family: 'Oswald', sans-serif;
+  color: var(--gold);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.portfolio-count {
+  color: rgba(255, 248, 231, 0.7);
+  font-size: 0.9rem;
+  font-weight: 400;
 }
 
 .portfolio-item.clicked {
@@ -922,6 +956,14 @@ footer::before {
 
 /* Responsive */
 @media (max-width: 768px) {
+  html {
+    scroll-padding-top: 50px;
+  }
+
+  section {
+    scroll-margin-top: 50px;
+  }
+
   .mobile-menu-toggle {
     display: block;
     font-size: 1.8rem;
@@ -984,7 +1026,7 @@ footer::before {
   }
 
   .hero {
-    padding: 120px 1.5rem 4rem !important;
+    padding: 160px 1.5rem 4rem !important;
     min-height: 85vh;
   }
 
@@ -1006,6 +1048,18 @@ footer::before {
   .services-grid,
   .portfolio-grid {
     grid-template-columns: 1fr;
+  }
+
+  .portfolio-title-bar {
+    padding: 0.75rem 1rem;
+  }
+
+  .portfolio-title-bar h4 {
+    font-size: 1.1rem;
+  }
+
+  .portfolio-count {
+    font-size: 0.8rem;
   }
 
   .footer-grid {
@@ -1058,7 +1112,7 @@ footer::before {
   }
 
   .hero {
-    padding: 120px 1rem 3rem;
+    padding: 160px 1rem 3rem !important;
   }
 
   section {

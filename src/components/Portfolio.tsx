@@ -120,7 +120,10 @@ export default function Portfolio() {
         <p className="section-subtitle">A glimpse of our finest work</p>
         <div className="instagram-cta">
           <p>
-            📸 Follow us on{' '}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '8px' }}>
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            Follow us on{' '}
             <a
               href="https://instagram.com/lv_clicks_"
               target="_blank"
@@ -141,26 +144,32 @@ export default function Portfolio() {
               style={{ cursor: item.count > 0 ? 'pointer' : 'default' }}
             >
               {item.image ? (
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  width={600}
-                  height={600}
-                  className="portfolio-image"
-                />
+                <>
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={600}
+                    height={600}
+                    className="portfolio-image"
+                  />
+                  <div className="portfolio-overlay">
+                    <h3>{item.title}</h3>
+                    <p>{item.subtitle}</p>
+                    {item.count > 0 && (
+                      <button className="view-more-btn">
+                        View {item.count} {item.count === 1 ? 'Photo' : 'Photos'}
+                      </button>
+                    )}
+                  </div>
+                </>
               ) : (
                 <div className="portfolio-placeholder">
                   <p>No images yet</p>
                 </div>
               )}
-              <div className="portfolio-overlay">
-                <h3>{item.title}</h3>
-                <p>{item.subtitle}</p>
-                {item.count > 0 && (
-                  <button className="view-more-btn">
-                    View {item.count} {item.count === 1 ? 'Photo' : 'Photos'}
-                  </button>
-                )}
+              <div className="portfolio-title-bar">
+                <h4>{item.title}</h4>
+                <span className="portfolio-count">{item.count} photos</span>
               </div>
             </div>
           ))}
