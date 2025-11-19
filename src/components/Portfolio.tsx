@@ -44,8 +44,8 @@ export default function Portfolio() {
 
   const fetchPortfolioData = async () => {
     try {
-      // Fetch landing page images for each category
-      const res = await fetch('/api/portfolio?landingOnly=true');
+      // Fetch landing page images for each category from JJ Clicks API
+      const res = await fetch('/api/jj-portfolio?landingOnly=true');
       const data = await res.json();
 
       if (data.success) {
@@ -58,8 +58,8 @@ export default function Portfolio() {
           categories.map(async (category) => {
             const landingImage = landingImages.find(img => img.category === category);
 
-            // Get count of images in this category
-            const countRes = await fetch(`/api/portfolio?category=${category}`);
+            // Get count of images in this category from JJ Clicks API
+            const countRes = await fetch(`/api/jj-portfolio?category=${category}`);
             const countData = await countRes.json();
             const count = countData.success ? countData.data.length : 0;
 
@@ -76,7 +76,7 @@ export default function Portfolio() {
         setPortfolioData(portfolioItems);
       }
     } catch (error) {
-      console.error('Error fetching portfolio data:', error);
+      console.error('Error fetching JJ portfolio data:', error);
     } finally {
       setLoading(false);
     }
@@ -87,14 +87,14 @@ export default function Portfolio() {
     setModalOpen(true);
 
     try {
-      const res = await fetch(`/api/portfolio?category=${category}`);
+      const res = await fetch(`/api/jj-portfolio?category=${category}`);
       const data = await res.json();
 
       if (data.success) {
         setAllImages(data.data);
       }
     } catch (error) {
-      console.error('Error fetching category images:', error);
+      console.error('Error fetching JJ category images:', error);
     }
   };
 
