@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
+import dns from 'dns';
+import { promisify } from 'util';
 
 // DNS setup for Node.js environment only - fix for macOS DNS issues
 if (typeof window === 'undefined') {
   try {
-    const dns = require('dns');
     // Set DNS resolution order to IPv4 first
     dns.setDefaultResultOrder('ipv4first');
-    // Use Google's DNS servers
-    if (typeof dns.setServers === 'function') {
-      dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
-    }
+    // Use Google's and Cloudflare's DNS servers
+    dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1']);
+    console.log('DNS configured successfully');
   } catch (error) {
     console.log('DNS setup skipped:', error);
   }
