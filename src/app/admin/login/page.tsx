@@ -40,7 +40,7 @@ export default function AdminLogin() {
     <div className="admin-login-container">
       <div className="admin-login-box">
         <div className="admin-login-logo">
-          <Image src="/jjlogowhite.png" alt="JJ Clicks" width={120} height={60} priority />
+          <Image src="/jjlogoblack.png" alt="JJ Clicks" width={120} height={60} priority />
         </div>
         <h1>Admin Login</h1>
         <p className="admin-login-subtitle">JJ Clicks Portfolio Management</p>
