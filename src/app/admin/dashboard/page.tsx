@@ -23,7 +23,7 @@ interface PortfolioImage {
   order: number;
 }
 
-const categoryIcons: Record<PortfolioCategory, JSX.Element> = {
+const categoryIcons: Record<PortfolioCategory, React.ReactElement> = {
   wedding: (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
@@ -425,7 +425,6 @@ export default function AdminDashboard() {
           <div className="images-section">
             <div className="section-header">
               <h2>
-                {categories.find((c) => c.value === selectedCategory)?.icon}{' '}
                 {categories.find((c) => c.value === selectedCategory)?.label} Images
               </h2>
               <div className="images-count">{images.length} / 20 images</div>
