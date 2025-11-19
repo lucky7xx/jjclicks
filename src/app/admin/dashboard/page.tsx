@@ -23,15 +23,76 @@ interface PortfolioImage {
   order: number;
 }
 
-const categories: { value: PortfolioCategory; label: string; icon: string }[] = [
-  { value: 'wedding', label: 'Wedding', icon: '💍' },
-  { value: 'pre-wedding', label: 'Pre-Wedding', icon: '💑' },
-  { value: 'events', label: 'Events', icon: '🎉' },
-  { value: 'portraits', label: 'Portraits', icon: '📸' },
-  { value: 'cinematic', label: 'Cinematic', icon: '🎬' },
-  { value: 'corporate', label: 'Corporate', icon: '💼' },
-  { value: 'maternity', label: 'Maternity', icon: '🤰' },
-  { value: 'baby', label: 'Baby & Newborn', icon: '👶' },
+const categoryIcons: Record<PortfolioCategory, JSX.Element> = {
+  wedding: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+      <path d="M19 10a7 7 0 0 1-14 0"/>
+      <path d="M12 12v10"/>
+    </svg>
+  ),
+  'pre-wedding': (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/>
+    </svg>
+  ),
+  events: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+      <line x1="16" y1="2" x2="16" y2="6"/>
+      <line x1="8" y1="2" x2="8" y2="6"/>
+      <line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+  ),
+  portraits: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+      <circle cx="12" cy="13" r="4"/>
+    </svg>
+  ),
+  cinematic: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+      <line x1="7" y1="2" x2="7" y2="22"/>
+      <line x1="17" y1="2" x2="17" y2="22"/>
+      <line x1="2" y1="12" x2="22" y2="12"/>
+      <line x1="2" y1="7" x2="7" y2="7"/>
+      <line x1="2" y1="17" x2="7" y2="17"/>
+      <line x1="17" y1="17" x2="22" y2="17"/>
+      <line x1="17" y1="7" x2="22" y2="7"/>
+    </svg>
+  ),
+  corporate: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+    </svg>
+  ),
+  maternity: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="8" r="5"/>
+      <path d="M20 21a8 8 0 1 0-16 0"/>
+    </svg>
+  ),
+  baby: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 12h.01"/>
+      <path d="M15 12h.01"/>
+      <path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/>
+      <path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"/>
+    </svg>
+  ),
+};
+
+const categories: { value: PortfolioCategory; label: string }[] = [
+  { value: 'wedding', label: 'Wedding' },
+  { value: 'pre-wedding', label: 'Pre-Wedding' },
+  { value: 'events', label: 'Events' },
+  { value: 'portraits', label: 'Portraits' },
+  { value: 'cinematic', label: 'Cinematic' },
+  { value: 'corporate', label: 'Corporate' },
+  { value: 'maternity', label: 'Maternity' },
+  { value: 'baby', label: 'Baby & Newborn' },
 ];
 
 export default function AdminDashboard() {
@@ -170,7 +231,11 @@ export default function AdminDashboard() {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#F5F6F0' }}>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '2rem', color: '#636B2F' }}>⏳</div>
+          <div style={{ color: '#636B2F' }}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: 'spin 1s linear infinite' }}>
+              <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+            </svg>
+          </div>
           <div style={{ marginTop: '1rem', color: '#5A6333' }}>Loading...</div>
         </div>
       </div>
@@ -193,7 +258,13 @@ export default function AdminDashboard() {
               <span className="dashboard-title">Admin Dashboard</span>
             </div>
             <div className="header-actions">
-              <span className="user-name">👋 {session.user?.name}</span>
+              <span className="user-name">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '0.5rem' }}>
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+                {session.user?.name}
+              </span>
               <a href="/" className="btn-secondary">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
@@ -263,20 +334,25 @@ export default function AdminDashboard() {
           <div className="upload-section">
             <div className="section-header">
               <h2>Upload New Image</h2>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value as PortfolioCategory)}
-                className="category-select"
-              >
-                {categories.map((cat) => {
-                  const count = allImages.filter((img) => img.category === cat.value).length;
-                  return (
-                    <option key={cat.value} value={cat.value}>
-                      {cat.icon} {cat.label} ({count}/20)
-                    </option>
-                  );
-                })}
-              </select>
+              <div className="category-selector">
+                <div className="category-icon-wrapper">
+                  {categoryIcons[selectedCategory]}
+                </div>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value as PortfolioCategory)}
+                  className="category-select"
+                >
+                  {categories.map((cat) => {
+                    const count = allImages.filter((img) => img.category === cat.value).length;
+                    return (
+                      <option key={cat.value} value={cat.value}>
+                        {cat.label} ({count}/20)
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
             </div>
 
             <form onSubmit={handleUpload} className="upload-form">
@@ -603,6 +679,23 @@ export default function AdminDashboard() {
           margin: 0;
         }
 
+        .category-selector {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+        }
+
+        .category-icon-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 48px;
+          height: 48px;
+          background: linear-gradient(135deg, #636B2F 0%, #7A8447 100%);
+          border-radius: 12px;
+          color: white;
+        }
+
         .category-select {
           padding: 0.75rem 1.25rem;
           border: 1px solid rgba(99, 107, 47, 0.3);
@@ -924,6 +1017,15 @@ export default function AdminDashboard() {
 
           .upload-card {
             padding: 2rem 1rem;
+          }
+        }
+
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
           }
         }
       `}</style>
