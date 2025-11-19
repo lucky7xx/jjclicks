@@ -1962,7 +1962,7 @@ footer {
 
   /* Mobile Footer Styles */
   footer {
-    padding: 2.5rem 1.5rem 1.25rem;
+    padding: 2.5rem 1.5rem calc(100px + env(safe-area-inset-bottom));
   }
 
   .footer-top {
