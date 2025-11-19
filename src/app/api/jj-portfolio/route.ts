@@ -7,7 +7,9 @@ import { uploadToCloudinary, deleteFromCloudinary } from '@/lib/cloudinary';
 // GET - Fetch all JJ Clicks portfolio images or by category
 export async function GET(request: NextRequest) {
   try {
+    console.log('Attempting to connect to MongoDB...');
     await connectDB();
+    console.log('MongoDB connected, fetching JJ portfolio images...');
 
     const searchParams = request.nextUrl.searchParams;
     const category = searchParams.get('category');
@@ -23,13 +25,16 @@ export async function GET(request: NextRequest) {
       query.isLandingPage = true;
     }
 
+    console.log('Query:', query);
     const images = await JJPortfolioImage.find(query).sort({ order: 1, uploadedAt: -1 });
+    console.log(`Found ${images.length} images`);
 
     return NextResponse.json({ success: true, data: images });
   } catch (error) {
     console.error('Error fetching JJ portfolio images:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch images';
     return NextResponse.json(
-      { success: false, error: 'Failed to fetch images' },
+      { success: false, error: errorMessage, details: String(error) },
       { status: 500 }
     );
   }

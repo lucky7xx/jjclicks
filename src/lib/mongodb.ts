@@ -1,9 +1,18 @@
 import mongoose from 'mongoose';
-import * as dns from 'dns';
 
-// Use Google's DNS servers to resolve MongoDB SRV records
-if (typeof dns.setServers === 'function') {
-  dns.setServers(['8.8.8.8', '8.8.4.4']);
+// DNS setup for Node.js environment only - fix for macOS DNS issues
+if (typeof window === 'undefined') {
+  try {
+    const dns = require('dns');
+    // Set DNS resolution order to IPv4 first
+    dns.setDefaultResultOrder('ipv4first');
+    // Use Google's DNS servers
+    if (typeof dns.setServers === 'function') {
+      dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
+    }
+  } catch (error) {
+    console.log('DNS setup skipped:', error);
+  }
 }
 
 const MONGODB_URI = process.env.MONGODB_URI!;
@@ -39,7 +48,11 @@ async function connectDB() {
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      console.log('MongoDB connected successfully');
       return mongoose;
+    }).catch((error) => {
+      console.error('MongoDB connection error:', error);
+      throw error;
     });
   }
 
@@ -47,6 +60,7 @@ async function connectDB() {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
+    console.error('Failed to establish MongoDB connection:', e);
     throw e;
   }
 
