@@ -62,13 +62,13 @@ export default function AdminDashboard() {
   const fetchImages = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/portfolio?category=${selectedCategory}`);
+      const res = await fetch(`/api/jj-portfolio?category=${selectedCategory}`);
       const data = await res.json();
       if (data.success) {
         setImages(data.data);
       }
     } catch (error) {
-      console.error('Error fetching images:', error);
+      console.error('Error fetching JJ images:', error);
     } finally {
       setLoading(false);
     }
@@ -76,13 +76,13 @@ export default function AdminDashboard() {
 
   const fetchAllImages = async () => {
     try {
-      const res = await fetch('/api/portfolio');
+      const res = await fetch('/api/jj-portfolio');
       const data = await res.json();
       if (data.success) {
         setAllImages(data.data);
       }
     } catch (error) {
-      console.error('Error fetching all images:', error);
+      console.error('Error fetching all JJ images:', error);
     }
   };
 
@@ -102,7 +102,7 @@ export default function AdminDashboard() {
     formData.append('isLandingPage', isLandingPage.toString());
 
     try {
-      const res = await fetch('/api/portfolio', {
+      const res = await fetch('/api/jj-portfolio', {
         method: 'POST',
         body: formData,
       });
@@ -129,7 +129,7 @@ export default function AdminDashboard() {
     if (!confirm('Are you sure you want to delete this image?')) return;
 
     try {
-      const res = await fetch(`/api/portfolio?id=${id}`, {
+      const res = await fetch(`/api/jj-portfolio?id=${id}`, {
         method: 'DELETE',
       });
 
@@ -149,7 +149,7 @@ export default function AdminDashboard() {
 
   const toggleLandingPage = async (id: string, currentValue: boolean) => {
     try {
-      const res = await fetch('/api/portfolio', {
+      const res = await fetch('/api/jj-portfolio', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, isLandingPage: !currentValue }),

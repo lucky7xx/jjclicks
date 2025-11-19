@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-import * as readline from 'readline';
 import * as dns from 'dns';
 
 // DNS setup for macOS compatibility
@@ -39,24 +38,12 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.models.User || mongoose.model('User', UserSchema);
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-function question(query: string): Promise<string> {
-  return new Promise((resolve) => {
-    rl.question(query, resolve);
-  });
-}
-
-async function createAdmin() {
+async function createJJAdmin() {
   try {
     console.log('\n🔧 JJ Clicks Admin Setup\n');
 
     if (!process.env.MONGODB_URI) {
       console.error('❌ Error: MONGODB_URI not found in .env.local');
-      console.log('Please create a .env.local file with your MongoDB connection string.');
       process.exit(1);
     }
 
@@ -65,26 +52,18 @@ async function createAdmin() {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('✅ Connected to MongoDB\n');
 
-    // Get admin details
-    const name = await question('Admin Name: ');
-    const email = await question('Admin Email: ');
-    const password = await question('Admin Password (min 6 characters): ');
-
-    if (!name || !email || !password) {
-      console.error('\n❌ All fields are required!');
-      process.exit(1);
-    }
-
-    if (password.length < 6) {
-      console.error('\n❌ Password must be at least 6 characters long!');
-      process.exit(1);
-    }
+    // Admin details
+    const name = 'JJ Admin';
+    const email = 'admin@jjclicks.com';
+    const password = 'jjclicks2025';
 
     // Check if admin already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      console.error('\n❌ An admin with this email already exists!');
-      process.exit(1);
+      console.log('ℹ️  Admin user already exists!');
+      console.log(`Email: ${email}`);
+      console.log('\nYou can login at: http://localhost:3000/admin/login');
+      process.exit(0);
     }
 
     // Hash password
@@ -98,10 +77,11 @@ async function createAdmin() {
       role: 'admin',
     });
 
-    console.log('\n✅ Admin user created successfully!');
-    console.log('\nAdmin Details:');
+    console.log('✅ JJ Clicks Admin user created successfully!\n');
+    console.log('Admin Details:');
     console.log(`Name: ${admin.name}`);
     console.log(`Email: ${admin.email}`);
+    console.log(`Password: ${password}`);
     console.log(`\nYou can now login at: http://localhost:3000/admin/login`);
 
     process.exit(0);
@@ -109,9 +89,8 @@ async function createAdmin() {
     console.error('\n❌ Error creating admin:', error);
     process.exit(1);
   } finally {
-    rl.close();
     await mongoose.disconnect();
   }
 }
 
-createAdmin();
+createJJAdmin();

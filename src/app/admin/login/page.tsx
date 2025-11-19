@@ -88,18 +88,18 @@ export default function AdminLogin() {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 50%, var(--brown) 100%);
+          background: linear-gradient(135deg, #2C3318 0%, #3D4621 50%, #4F5626 100%);
           padding: 1rem;
         }
 
         .admin-login-box {
-          background: rgba(26, 26, 26, 0.95);
-          border: 1px solid var(--gold);
+          background: rgba(255, 255, 255, 0.98);
+          border: 1px solid var(--primary);
           border-radius: 12px;
           padding: 2rem 1.5rem;
           max-width: 450px;
           width: 100%;
-          box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
+          box-shadow: 0 10px 40px rgba(99, 107, 47, 0.3);
         }
 
         @media (min-width: 640px) {
@@ -116,7 +116,7 @@ export default function AdminLogin() {
           text-align: center;
           margin-bottom: 2rem;
           padding: 1rem;
-          background: rgba(255, 255, 255, 0.05);
+          background: rgba(99, 107, 47, 0.1);
           border-radius: 8px;
         }
 
@@ -124,7 +124,7 @@ export default function AdminLogin() {
           font-family: 'Oswald', sans-serif;
           font-size: 1.75rem;
           text-align: center;
-          color: var(--gold);
+          color: var(--primary);
           margin-bottom: 0.5rem;
         }
 
@@ -136,7 +136,7 @@ export default function AdminLogin() {
 
         .admin-login-subtitle {
           text-align: center;
-          color: rgba(255, 248, 231, 0.7);
+          color: #5A6333;
           margin-bottom: 2rem;
           font-size: 0.95rem;
         }
@@ -164,7 +164,7 @@ export default function AdminLogin() {
 
         .admin-form-group label {
           font-size: 0.9rem;
-          color: var(--gold);
+          color: var(--primary);
           margin-bottom: 0.5rem;
           font-weight: 600;
           letter-spacing: 1px;
@@ -173,9 +173,9 @@ export default function AdminLogin() {
 
         .admin-form-group input {
           padding: 1rem;
-          background: rgba(26, 26, 26, 0.8);
-          border: 1px solid rgba(212, 175, 55, 0.3);
-          color: var(--cream);
+          background: #F5F6F0;
+          border: 1px solid rgba(99, 107, 47, 0.3);
+          color: #2C3318;
           font-family: 'Lato', sans-serif;
           font-size: 1rem;
           border-radius: 6px;
@@ -184,14 +184,14 @@ export default function AdminLogin() {
 
         .admin-form-group input:focus {
           outline: none;
-          border-color: var(--gold);
-          box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+          border-color: var(--primary);
+          box-shadow: 0 0 15px rgba(99, 107, 47, 0.2);
         }
 
         .admin-login-button {
           padding: 1.2rem;
-          background: var(--gold);
-          color: var(--black);
+          background: var(--primary);
+          color: white;
           border: none;
           font-weight: 600;
           font-size: 1rem;
@@ -204,9 +204,9 @@ export default function AdminLogin() {
         }
 
         .admin-login-button:hover:not(:disabled) {
-          background: var(--light-gold);
+          background: var(--dark-primary);
           transform: translateY(-2px);
-          box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+          box-shadow: 0 10px 30px rgba(99, 107, 47, 0.3);
         }
 
         .admin-login-button:disabled {
@@ -222,14 +222,14 @@ export default function AdminLogin() {
         }
 
         .admin-login-footer a {
-          color: var(--gold);
+          color: var(--primary);
           text-decoration: none;
           font-size: 0.9rem;
           transition: color 0.3s;
         }
 
         .admin-login-footer a:hover {
-          color: var(--light-gold);
+          color: var(--dark-primary);
         }
       `}</style>
     </div>
