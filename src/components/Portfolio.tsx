@@ -37,6 +37,9 @@ export default function Portfolio() {
   const [allImages, setAllImages] = useState<PortfolioImage[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loadingImages, setLoadingImages] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   useEffect(() => {
     fetchPortfolioData();
@@ -85,6 +88,7 @@ export default function Portfolio() {
   const openModal = async (category: PortfolioCategory) => {
     setSelectedCategory(category);
     setModalOpen(true);
+    setLoadingImages(true);
 
     try {
       const res = await fetch(`/api/jj-portfolio?category=${category}`);
@@ -95,20 +99,60 @@ export default function Portfolio() {
       }
     } catch (error) {
       console.error('Error fetching JJ category images:', error);
+    } finally {
+      setLoadingImages(false);
     }
   };
+
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+  };
+
+  const nextImage = () => {
+    setLightboxIndex((prev) => (prev + 1) % allImages.length);
+  };
+
+  const prevImage = () => {
+    setLightboxIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxOpen) return;
+
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxOpen, allImages.length]);
 
   const closeModal = () => {
     setModalOpen(false);
     setSelectedCategory(null);
     setAllImages([]);
+    setLoadingImages(false);
   };
 
   if (loading) {
     return (
       <section id="portfolio" className="portfolio">
-        <h2 className="section-title">Portfolio</h2>
-        <p className="section-subtitle">Loading our finest work...</p>
+        <div className="portfolio-loading">
+          <div className="loading-spinner">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+            </svg>
+          </div>
+          <h2 className="section-title">Loading Portfolio</h2>
+          <p className="section-subtitle">Preparing our finest work...</p>
+        </div>
       </section>
     );
   }
@@ -212,23 +256,88 @@ export default function Portfolio() {
             </button>
             <h2>{selectedCategory && categoryLabels[selectedCategory].title}</h2>
             <p className="modal-subtitle">
-              {allImages.length} {allImages.length === 1 ? 'Photo' : 'Photos'}
+              {loadingImages ? 'Loading...' : `${allImages.length} ${allImages.length === 1 ? 'Photo' : 'Photos'}`}
             </p>
             <div className="modal-gallery">
-              {allImages.map((image) => (
-                <div key={image._id} className="modal-image-wrapper">
-                  <Image
-                    src={image.url}
-                    alt={selectedCategory || 'Portfolio'}
-                    width={400}
-                    height={400}
-                    className="modal-image"
-                  />
-                  <div className="modal-image-label">
-                    {categoryLabels[image.category].title}
+              {loadingImages ? (
+                <div className="modal-loading">
+                  <div className="loading-spinner">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                    </svg>
                   </div>
+                  <p>Loading images...</p>
                 </div>
-              ))}
+              ) : (
+                allImages.map((image, index) => (
+                  <div
+                    key={image._id}
+                    className="modal-image-wrapper"
+                    onClick={() => openLightbox(index)}
+                  >
+                    <Image
+                      src={image.url}
+                      alt={selectedCategory || 'Portfolio'}
+                      width={400}
+                      height={400}
+                      className="modal-image"
+                    />
+                    <div className="modal-image-overlay">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                      </svg>
+                    </div>
+                    <div className="modal-image-label">
+                      {categoryLabels[image.category].title}
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Lightbox */}
+      {lightboxOpen && allImages.length > 0 && (
+        <div className="lightbox" onClick={closeLightbox}>
+          <button className="lightbox-close" onClick={closeLightbox}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+
+          <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); prevImage(); }}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </button>
+
+          <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); nextImage(); }}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <div className="lightbox-image-wrapper">
+              <Image
+                src={allImages[lightboxIndex].url}
+                alt={`${selectedCategory} photo ${lightboxIndex + 1}`}
+                width={1920}
+                height={1080}
+                className="lightbox-image"
+                priority
+              />
+            </div>
+            <div className="lightbox-info">
+              <div className="lightbox-category">
+                {selectedCategory && categoryLabels[selectedCategory].title}
+              </div>
+              <div className="lightbox-counter">
+                {lightboxIndex + 1} / {allImages.length}
+              </div>
             </div>
           </div>
         </div>
