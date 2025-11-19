@@ -23,15 +23,15 @@ interface PortfolioImage {
   order: number;
 }
 
-const categories: { value: PortfolioCategory; label: string }[] = [
-  { value: 'wedding', label: 'Wedding' },
-  { value: 'pre-wedding', label: 'Pre-Wedding' },
-  { value: 'events', label: 'Events' },
-  { value: 'portraits', label: 'Portraits' },
-  { value: 'cinematic', label: 'Cinematic' },
-  { value: 'corporate', label: 'Corporate' },
-  { value: 'maternity', label: 'Maternity' },
-  { value: 'baby', label: 'Baby & Newborn' },
+const categories: { value: PortfolioCategory; label: string; icon: string }[] = [
+  { value: 'wedding', label: 'Wedding', icon: '💍' },
+  { value: 'pre-wedding', label: 'Pre-Wedding', icon: '💑' },
+  { value: 'events', label: 'Events', icon: '🎉' },
+  { value: 'portraits', label: 'Portraits', icon: '📸' },
+  { value: 'cinematic', label: 'Cinematic', icon: '🎬' },
+  { value: 'corporate', label: 'Corporate', icon: '💼' },
+  { value: 'maternity', label: 'Maternity', icon: '🤰' },
+  { value: 'baby', label: 'Baby & Newborn', icon: '👶' },
 ];
 
 export default function AdminDashboard() {
@@ -44,7 +44,6 @@ export default function AdminDashboard() {
   const [uploading, setUploading] = useState(false);
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [isLandingPage, setIsLandingPage] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -168,7 +167,14 @@ export default function AdminDashboard() {
   };
 
   if (status === 'loading') {
-    return <div className="admin-loading">Loading...</div>;
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#F5F6F0' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: '2rem', color: '#636B2F' }}>⏳</div>
+          <div style={{ marginTop: '1rem', color: '#5A6333' }}>Loading...</div>
+        </div>
+      </div>
+    );
   }
 
   if (!session) {
@@ -177,171 +183,159 @@ export default function AdminDashboard() {
 
   return (
     <div className="admin-dashboard">
+      {/* Header */}
       <header className="admin-header">
-        <div className="admin-header-content">
-          <div className="admin-logo">
-            <Image src="/jjlogowhite.png" alt="JJ Clicks" width={80} height={40} />
-            <h1>Admin Dashboard</h1>
-          </div>
-
-          {/* Desktop Menu */}
-          <div className="admin-user-menu desktop-menu">
-            <span className="welcome-text">Welcome, {session.user?.name}</span>
-            <a href="/" className="admin-view-site-btn">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/>
-              </svg>
-              View Site
-            </a>
-            <button onClick={() => signOut({ callbackUrl: '/admin/login' })} className="admin-logout-btn">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" fill="currentColor"/>
-              </svg>
-              Logout
-            </button>
-          </div>
-
-          {/* Mobile Hamburger */}
-          <button
-            className="mobile-menu-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Menu Dropdown */}
-        {mobileMenuOpen && (
-          <div className="mobile-menu-dropdown">
-            <div className="mobile-menu-item welcome-item">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="currentColor"/>
-              </svg>
-              <span>{session.user?.name}</span>
+        <div className="admin-container">
+          <div className="header-content">
+            <div className="logo-section">
+              <Image src="/jjlogoblack.png" alt="JJ Clicks" width={100} height={50} />
+              <div className="logo-divider"></div>
+              <span className="dashboard-title">Admin Dashboard</span>
             </div>
-            <a href="/" className="mobile-menu-item">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor"/>
-              </svg>
-              <span>View Site</span>
-            </a>
-            <button onClick={() => signOut({ callbackUrl: '/admin/login' })} className="mobile-menu-item logout-item">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" fill="currentColor"/>
-              </svg>
-              <span>Logout</span>
-            </button>
+            <div className="header-actions">
+              <span className="user-name">👋 {session.user?.name}</span>
+              <a href="/" className="btn-secondary">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                </svg>
+                View Site
+              </a>
+              <button onClick={() => signOut({ callbackUrl: '/admin/login' })} className="btn-logout">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                  <polyline points="16 17 21 12 16 7"/>
+                  <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                Logout
+              </button>
+            </div>
           </div>
-        )}
+        </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
-        <div className="mobile-menu-overlay" onClick={() => setMobileMenuOpen(false)}></div>
-      )}
+      {/* Main Content */}
+      <main className="admin-main">
+        <div className="admin-container">
+          {/* Stats Cards */}
+          <div className="stats-grid">
+            <div className="stat-card">
+              <div className="stat-icon" style={{ background: 'linear-gradient(135deg, #636B2F 0%, #7A8447 100%)' }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <path d="M21 15l-5-5L5 21"/>
+                </svg>
+              </div>
+              <div className="stat-content">
+                <div className="stat-value">{allImages.length}</div>
+                <div className="stat-label">Total Images</div>
+              </div>
+            </div>
 
-      <div className="admin-container">
-        <div className="admin-main">
-          <div className="admin-category-selector">
-            <label htmlFor="category-select">Select Portfolio Category:</label>
-            <select
-              id="category-select"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value as PortfolioCategory)}
-              className="category-dropdown"
-            >
-              {categories.map((cat) => (
-                <option key={cat.value} value={cat.value}>
-                  {cat.label} ({allImages.filter((img) => img.category === cat.value).length}/20)
-                </option>
-              ))}
-            </select>
+            <div className="stat-card">
+              <div className="stat-icon" style={{ background: 'linear-gradient(135deg, #4A5228 0%, #636B2F 100%)' }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+              </div>
+              <div className="stat-content">
+                <div className="stat-value">{images.length}/20</div>
+                <div className="stat-label">Category Images</div>
+              </div>
+            </div>
+
+            <div className="stat-card">
+              <div className="stat-icon" style={{ background: 'linear-gradient(135deg, #7A8447 0%, #A8B574 100%)' }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                  <path d="M3 3h18v18H3zM21 9H3M21 15H3M12 3v18"/>
+                </svg>
+              </div>
+              <div className="stat-content">
+                <div className="stat-value">8</div>
+                <div className="stat-label">Categories</div>
+              </div>
+            </div>
           </div>
 
-          <div className="admin-upload-section">
-            <div className="upload-header">
-              <div className="upload-title-group">
-                <h2>
-                  <svg className="upload-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  Upload to {categories.find((c) => c.value === selectedCategory)?.label}
-                </h2>
-              </div>
-              <div className="upload-progress-indicator">
-                <div className="progress-bar-container">
-                  <div className="progress-bar" style={{ width: `${(images.length / 20) * 100}%` }}></div>
-                </div>
-                <span className="progress-text">{images.length}/20 images</span>
-              </div>
+          {/* Upload Section */}
+          <div className="upload-section">
+            <div className="section-header">
+              <h2>Upload New Image</h2>
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value as PortfolioCategory)}
+                className="category-select"
+              >
+                {categories.map((cat) => {
+                  const count = allImages.filter((img) => img.category === cat.value).length;
+                  return (
+                    <option key={cat.value} value={cat.value}>
+                      {cat.icon} {cat.label} ({count}/20)
+                    </option>
+                  );
+                })}
+              </select>
             </div>
 
             <form onSubmit={handleUpload} className="upload-form">
-              <div className="file-input-wrapper">
+              <div className="upload-card">
                 <input
                   type="file"
                   accept="image/*"
                   onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
                   required
                   id="file-input"
+                  className="file-input"
                 />
-                <label htmlFor="file-input" className="file-input-label">
-                  <svg className="upload-cloud-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 18a4.5 4.5 0 0 1 0-9 5.5 5.5 0 0 1 11 2 3 3 0 0 1 0 6h-1M12 15v6M15 18l-3-3-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  <span className="file-label-text">
-                    {uploadFile ? (
-                      <>
-                        <strong>{uploadFile.name}</strong>
-                        <small>{(uploadFile.size / 1024 / 1024).toFixed(2)} MB</small>
-                      </>
-                    ) : (
-                      <>
-                        <strong>Click to browse or drag & drop</strong>
-                        <small>PNG, JPG, GIF up to 10MB</small>
-                      </>
-                    )}
-                  </span>
-                </label>
-              </div>
-
-              <div className="upload-options">
-                <div className="checkbox-wrapper">
-                  <input
-                    type="checkbox"
-                    id="landing-page"
-                    checked={isLandingPage}
-                    onChange={(e) => setIsLandingPage(e.target.checked)}
-                  />
-                  <label htmlFor="landing-page">
-                    <svg className="star-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                <label htmlFor="file-input" className="file-label">
+                  <div className="upload-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
                     </svg>
-                    Set as Landing Page Image
+                  </div>
+                  {uploadFile ? (
+                    <div className="file-info">
+                      <div className="file-name">{uploadFile.name}</div>
+                      <div className="file-size">{(uploadFile.size / 1024 / 1024).toFixed(2)} MB</div>
+                    </div>
+                  ) : (
+                    <div className="upload-text">
+                      <div className="upload-title">Click to upload or drag and drop</div>
+                      <div className="upload-subtitle">PNG, JPG, GIF up to 10MB</div>
+                    </div>
+                  )}
+                </label>
+
+                <div className="upload-options">
+                  <label className="checkbox-label">
+                    <input
+                      type="checkbox"
+                      checked={isLandingPage}
+                      onChange={(e) => setIsLandingPage(e.target.checked)}
+                      className="checkbox-input"
+                    />
+                    <span className="checkbox-text">Set as category landing page image</span>
                   </label>
                 </div>
 
-                <button type="submit" className="upload-submit-btn" disabled={uploading || !uploadFile || images.length >= 20}>
+                <button type="submit" disabled={!uploadFile || uploading} className="btn-upload">
                   {uploading ? (
                     <>
-                      <svg className="spinner" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <circle className="spinner-circle" cx="12" cy="12" r="10" fill="none" strokeWidth="3"/>
+                      <svg className="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="10"/>
                       </svg>
                       Uploading...
                     </>
                   ) : (
                     <>
-                      <svg className="check-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
                       </svg>
                       Upload Image
                     </>
@@ -351,29 +345,71 @@ export default function AdminDashboard() {
             </form>
           </div>
 
-          <div className="admin-gallery-section">
-            <h2>Uploaded Images</h2>
+          {/* Images Grid */}
+          <div className="images-section">
+            <div className="section-header">
+              <h2>
+                {categories.find((c) => c.value === selectedCategory)?.icon}{' '}
+                {categories.find((c) => c.value === selectedCategory)?.label} Images
+              </h2>
+              <div className="images-count">{images.length} / 20 images</div>
+            </div>
+
             {loading ? (
-              <p>Loading images...</p>
+              <div className="loading-state">
+                <div className="loading-spinner"></div>
+                <div>Loading images...</div>
+              </div>
             ) : images.length === 0 ? (
-              <p className="no-images">No images uploaded yet for this category.</p>
+              <div className="empty-state">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+                <h3>No images yet</h3>
+                <p>Upload your first image to this category</p>
+              </div>
             ) : (
-              <div className="admin-gallery-grid">
+              <div className="images-grid">
                 {images.map((image) => (
-                  <div key={image._id} className="admin-gallery-item">
-                    <div className="admin-image-wrapper">
-                      <Image src={image.url} alt="Portfolio" width={300} height={300} />
-                      {image.isLandingPage && <span className="landing-badge">Landing Page</span>}
+                  <div key={image._id} className="image-card">
+                    <div className="image-wrapper">
+                      <Image
+                        src={image.url}
+                        alt="Portfolio"
+                        width={400}
+                        height={300}
+                        className="image"
+                      />
+                      {image.isLandingPage && (
+                        <div className="landing-badge">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                          Landing
+                        </div>
+                      )}
                     </div>
-                    <div className="admin-image-actions">
+                    <div className="image-actions">
                       <button
                         onClick={() => toggleLandingPage(image._id, image.isLandingPage)}
-                        className="toggle-landing-btn"
+                        className={`btn-action ${image.isLandingPage ? 'active' : ''}`}
+                        title={image.isLandingPage ? 'Remove as landing' : 'Set as landing'}
                       >
-                        {image.isLandingPage ? '★' : '☆'}
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill={image.isLandingPage ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
                       </button>
-                      <button onClick={() => handleDelete(image._id)} className="delete-btn">
-                        Delete
+                      <button
+                        onClick={() => handleDelete(image._id)}
+                        className="btn-action btn-delete"
+                        title="Delete image"
+                      >
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <polyline points="3 6 5 6 21 6"/>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        </svg>
                       </button>
                     </div>
                   </div>
@@ -382,529 +418,370 @@ export default function AdminDashboard() {
             )}
           </div>
         </div>
-      </div>
+      </main>
 
       <style jsx>{`
         .admin-dashboard {
           min-height: 100vh;
-          background: var(--black);
+          background: #F5F6F0;
         }
 
         .admin-header {
-          background: rgba(212, 175, 55, 0.95);
-          padding: 1rem 0;
-          border-bottom: 2px solid var(--gold);
+          background: white;
+          border-bottom: 1px solid rgba(99, 107, 47, 0.1);
           position: sticky;
           top: 0;
           z-index: 100;
-        }
-
-        .admin-header-content {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 0 2rem;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .admin-logo {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-        }
-
-        .admin-logo h1 {
-          font-family: 'Oswald', sans-serif;
-          color: var(--black);
-          font-size: 1.5rem;
-          margin: 0;
-        }
-
-        .admin-user-menu {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          color: var(--black);
-          font-weight: 600;
-        }
-
-        .desktop-menu {
-          display: flex;
-        }
-
-        .mobile-menu-toggle {
-          display: none;
-          background: none;
-          border: none;
-          cursor: pointer;
-          padding: 0.5rem;
-          color: var(--black);
-          width: 40px;
-          height: 40px;
-        }
-
-        .mobile-menu-toggle svg {
-          width: 28px;
-          height: 28px;
-        }
-
-        .welcome-text {
-          color: var(--black);
-          font-weight: 500;
-        }
-
-        .admin-logout-btn,
-        .admin-view-site-btn {
-          padding: 0.65rem 1.25rem;
-          background: var(--black);
-          color: var(--gold);
-          border: none;
-          cursor: pointer;
-          font-weight: 600;
-          text-decoration: none;
-          border-radius: 6px;
-          transition: all 0.3s;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          font-size: 0.95rem;
-        }
-
-        .admin-logout-btn svg,
-        .admin-view-site-btn svg {
-          width: 18px;
-          height: 18px;
-        }
-
-        .admin-logout-btn:hover,
-        .admin-view-site-btn:hover {
-          background: var(--dark-gray);
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .mobile-menu-dropdown {
-          display: none;
-          position: absolute;
-          top: 100%;
-          right: 0;
-          background: rgba(26, 26, 26, 0.98);
-          border: 1px solid var(--gold);
-          border-top: none;
-          min-width: 250px;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-          animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .mobile-menu-item {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          padding: 1rem 1.5rem;
-          color: var(--cream);
-          text-decoration: none;
-          border: none;
-          background: none;
-          width: 100%;
-          cursor: pointer;
-          transition: all 0.3s;
-          font-size: 1rem;
-          font-weight: 500;
-          border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-        }
-
-        .mobile-menu-item:last-child {
-          border-bottom: none;
-        }
-
-        .mobile-menu-item svg {
-          width: 20px;
-          height: 20px;
-          fill: var(--gold);
-        }
-
-        .mobile-menu-item:hover {
-          background: rgba(212, 175, 55, 0.1);
-        }
-
-        .mobile-menu-item.welcome-item {
-          background: rgba(212, 175, 55, 0.15);
-          cursor: default;
-          font-weight: 600;
-        }
-
-        .mobile-menu-item.welcome-item:hover {
-          background: rgba(212, 175, 55, 0.15);
-        }
-
-        .mobile-menu-item.logout-item {
-          color: #ff6b6b;
-        }
-
-        .mobile-menu-item.logout-item svg {
-          fill: #ff6b6b;
-        }
-
-        .mobile-menu-overlay {
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.5);
-          z-index: 99;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .admin-container {
           max-width: 1400px;
           margin: 0 auto;
-          min-height: calc(100vh - 80px);
+          padding: 0 2rem;
+        }
+
+        .header-content {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1.25rem 0;
+          gap: 2rem;
+        }
+
+        .logo-section {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+        }
+
+        .logo-divider {
+          width: 1px;
+          height: 32px;
+          background: rgba(99, 107, 47, 0.2);
+        }
+
+        .dashboard-title {
+          font-family: 'Oswald', sans-serif;
+          font-size: 1.25rem;
+          color: #2C3318;
+          font-weight: 600;
+        }
+
+        .header-actions {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        .user-name {
+          color: #5A6333;
+          font-weight: 500;
+          padding: 0 1rem;
+          border-right: 1px solid rgba(99, 107, 47, 0.2);
+        }
+
+        .btn-secondary {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.625rem 1.25rem;
+          background: #F5F6F0;
+          color: #636B2F;
+          border: 1px solid rgba(99, 107, 47, 0.2);
+          border-radius: 8px;
+          font-weight: 500;
+          text-decoration: none;
+          transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+          background: rgba(99, 107, 47, 0.1);
+          border-color: var(--primary);
+        }
+
+        .btn-logout {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.625rem 1.25rem;
+          background: white;
+          color: #dc3545;
+          border: 1px solid rgba(220, 53, 69, 0.3);
+          border-radius: 8px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+          background: #dc3545;
+          color: white;
+          border-color: #dc3545;
         }
 
         .admin-main {
-          padding: 2rem;
+          padding: 2.5rem 0;
         }
 
-        .admin-category-selector {
-          background: var(--dark-gray);
-          padding: 1.5rem 2rem;
-          border-radius: 8px;
-          border: 1px solid rgba(212, 175, 55, 0.2);
-          margin-bottom: 2rem;
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 1.5rem;
+          margin-bottom: 2.5rem;
         }
 
-        .admin-category-selector label {
-          display: block;
-          font-family: 'Oswald', sans-serif;
-          color: var(--gold);
-          font-size: 1.1rem;
-          margin-bottom: 0.75rem;
-          font-weight: 600;
-          letter-spacing: 0.5px;
-        }
-
-        .category-dropdown {
-          width: 100%;
-          padding: 1rem 1.25rem;
-          background: rgba(26, 26, 26, 0.8);
-          border: 2px solid rgba(212, 175, 55, 0.3);
-          color: var(--cream);
-          font-family: 'Lato', sans-serif;
-          font-size: 1rem;
-          font-weight: 500;
-          border-radius: 6px;
-          cursor: pointer;
-          transition: all 0.3s;
-          appearance: none;
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23D4AF37' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-          background-repeat: no-repeat;
-          background-position: right 1rem center;
-          padding-right: 3rem;
-        }
-
-        .category-dropdown:hover {
-          border-color: var(--gold);
-          background-color: rgba(26, 26, 26, 0.95);
-        }
-
-        .category-dropdown:focus {
-          outline: none;
-          border-color: var(--gold);
-          box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
-        }
-
-        .category-dropdown option {
-          background: var(--dark-gray);
-          color: var(--cream);
-          padding: 0.75rem;
-        }
-
-        .admin-upload-section {
-          background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(42, 42, 42, 0.95) 100%);
-          padding: 2rem;
+        .stat-card {
+          background: white;
+          padding: 1.75rem;
           border-radius: 12px;
-          border: 1px solid rgba(212, 175, 55, 0.3);
-          margin-bottom: 2rem;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .upload-header {
+          border: 1px solid rgba(99, 107, 47, 0.1);
           display: flex;
-          justify-content: space-between;
           align-items: center;
-          margin-bottom: 2rem;
-          flex-wrap: wrap;
-          gap: 1rem;
+          gap: 1.25rem;
+          transition: all 0.3s;
         }
 
-        .upload-title-group h2 {
+        .stat-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(99, 107, 47, 0.15);
+          border-color: var(--primary);
+        }
+
+        .stat-icon {
+          width: 56px;
+          height: 56px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+
+        .stat-content {
+          flex: 1;
+        }
+
+        .stat-value {
+          font-size: 2rem;
+          font-weight: 700;
+          color: #2C3318;
           font-family: 'Oswald', sans-serif;
-          color: var(--gold);
-          font-size: 1.5rem;
+          line-height: 1;
+          margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+          color: #5A6333;
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+
+        .upload-section,
+        .images-section {
+          background: white;
+          border-radius: 16px;
+          padding: 2rem;
+          margin-bottom: 2rem;
+          border: 1px solid rgba(99, 107, 47, 0.1);
+        }
+
+        .section-header {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
+          justify-content: space-between;
+          margin-bottom: 1.5rem;
+          padding-bottom: 1.5rem;
+          border-bottom: 2px solid rgba(99, 107, 47, 0.1);
+        }
+
+        .section-header h2 {
+          font-family: 'Oswald', sans-serif;
+          font-size: 1.75rem;
+          color: #2C3318;
+          font-weight: 600;
           margin: 0;
         }
 
-        .upload-icon {
-          width: 28px;
-          height: 28px;
-          stroke: var(--gold);
+        .category-select {
+          padding: 0.75rem 1.25rem;
+          border: 1px solid rgba(99, 107, 47, 0.3);
+          border-radius: 8px;
+          background: #F5F6F0;
+          color: #2C3318;
+          font-size: 1rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
         }
 
-        .upload-progress-indicator {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-        }
-
-        .progress-bar-container {
-          width: 150px;
-          height: 8px;
-          background: rgba(26, 26, 26, 0.8);
-          border-radius: 10px;
-          overflow: hidden;
-          border: 1px solid rgba(212, 175, 55, 0.3);
-        }
-
-        .progress-bar {
-          height: 100%;
-          background: linear-gradient(90deg, var(--gold) 0%, var(--light-gold) 100%);
-          transition: width 0.5s ease;
-          border-radius: 10px;
-        }
-
-        .progress-text {
-          color: var(--gold);
-          font-weight: 600;
-          font-size: 0.9rem;
-          white-space: nowrap;
+        .category-select:focus {
+          outline: none;
+          border-color: var(--primary);
+          box-shadow: 0 0 0 3px rgba(99, 107, 47, 0.1);
         }
 
         .upload-form {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
+          max-width: 800px;
+          margin: 0 auto;
         }
 
-        .file-input-wrapper input[type='file'] {
+        .upload-card {
+          border: 2px dashed rgba(99, 107, 47, 0.3);
+          border-radius: 12px;
+          padding: 3rem 2rem;
+          text-align: center;
+          transition: all 0.3s;
+        }
+
+        .upload-card:hover {
+          border-color: var(--primary);
+          background: rgba(99, 107, 47, 0.02);
+        }
+
+        .file-input {
           display: none;
         }
 
-        .file-input-label {
-          padding: 2.5rem 2rem;
-          background: rgba(26, 26, 26, 0.6);
-          border: 2px dashed rgba(212, 175, 55, 0.4);
-          color: var(--cream);
-          cursor: pointer;
-          border-radius: 8px;
-          text-align: center;
-          transition: all 0.3s;
+        .file-label {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 1rem;
+          gap: 1.5rem;
+          cursor: pointer;
+          margin-bottom: 2rem;
         }
 
-        .file-input-label:hover {
-          border-color: var(--gold);
-          background: rgba(26, 26, 26, 0.8);
-          border-style: solid;
+        .upload-icon {
+          color: var(--primary);
         }
 
-        .upload-cloud-icon {
-          width: 48px;
-          height: 48px;
-          stroke: var(--gold);
-          opacity: 0.8;
+        .upload-text {
+          color: #5A6333;
         }
 
-        .file-label-text {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
+        .upload-title {
+          font-size: 1.125rem;
+          font-weight: 600;
+          color: #2C3318;
+          margin-bottom: 0.5rem;
         }
 
-        .file-label-text strong {
-          font-size: 1.1rem;
-          color: var(--cream);
+        .upload-subtitle {
+          font-size: 0.9rem;
+          color: #5A6333;
         }
 
-        .file-label-text small {
-          font-size: 0.85rem;
-          color: rgba(255, 248, 231, 0.6);
+        .file-info {
+          color: #2C3318;
+        }
+
+        .file-name {
+          font-weight: 600;
+          font-size: 1.125rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .file-size {
+          color: #5A6333;
+          font-size: 0.9rem;
         }
 
         .upload-options {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 1rem;
-          flex-wrap: wrap;
+          margin-bottom: 2rem;
         }
 
-        .checkbox-wrapper {
+        .checkbox-label {
           display: flex;
           align-items: center;
+          justify-content: center;
           gap: 0.75rem;
-          background: rgba(26, 26, 26, 0.6);
-          padding: 0.75rem 1.25rem;
-          border-radius: 6px;
-          border: 1px solid rgba(212, 175, 55, 0.2);
-          transition: all 0.3s;
           cursor: pointer;
         }
 
-        .checkbox-wrapper:hover {
-          background: rgba(26, 26, 26, 0.8);
-          border-color: var(--gold);
-        }
-
-        .checkbox-wrapper input[type='checkbox'] {
+        .checkbox-input {
           width: 20px;
           height: 20px;
           cursor: pointer;
-          accent-color: var(--gold);
+          accent-color: var(--primary);
         }
 
-        .checkbox-wrapper label {
-          color: var(--cream);
-          cursor: pointer;
-          margin: 0;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
+        .checkbox-text {
+          color: #2C3318;
           font-weight: 500;
         }
 
-        .star-icon {
-          width: 18px;
-          height: 18px;
-          fill: var(--gold);
-          opacity: 0.8;
-        }
-
-        .upload-submit-btn {
-          padding: 1rem 2.5rem;
-          background: linear-gradient(135deg, var(--gold) 0%, var(--dark-gold) 100%);
-          color: var(--black);
-          border: none;
-          font-weight: 700;
-          font-size: 1rem;
-          cursor: pointer;
-          border-radius: 6px;
-          transition: all 0.3s;
-          display: flex;
+        .btn-upload {
+          display: inline-flex;
           align-items: center;
           gap: 0.75rem;
-          justify-content: center;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-          box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+          padding: 1rem 2.5rem;
+          background: var(--primary);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-weight: 600;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: all 0.3s;
         }
 
-        .upload-submit-btn:hover:not(:disabled) {
-          background: linear-gradient(135deg, var(--light-gold) 0%, var(--gold) 100%);
+        .btn-upload:hover:not(:disabled) {
+          background: var(--dark-primary);
           transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+          box-shadow: 0 8px 20px rgba(99, 107, 47, 0.3);
         }
 
-        .upload-submit-btn:disabled {
-          opacity: 0.5;
+        .btn-upload:disabled {
+          opacity: 0.6;
           cursor: not-allowed;
-          transform: none;
-        }
-
-        .check-icon {
-          width: 20px;
-          height: 20px;
-          stroke: var(--black);
         }
 
         .spinner {
-          width: 20px;
-          height: 20px;
           animation: spin 1s linear infinite;
         }
 
-        .spinner-circle {
-          stroke: var(--black);
-          stroke-dasharray: 50;
-          stroke-dashoffset: 0;
-          animation: dash 1.5s ease-in-out infinite;
-        }
-
         @keyframes spin {
-          to {
-            transform: rotate(360deg);
-          }
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
 
-        @keyframes dash {
-          0% {
-            stroke-dashoffset: 50;
-          }
-          50% {
-            stroke-dashoffset: 25;
-          }
-          100% {
-            stroke-dashoffset: 50;
-          }
+        .images-count {
+          padding: 0.5rem 1rem;
+          background: rgba(99, 107, 47, 0.1);
+          color: var(--primary);
+          border-radius: 20px;
+          font-weight: 600;
+          font-size: 0.9rem;
         }
 
-        .admin-gallery-section h2 {
-          font-family: 'Oswald', sans-serif;
-          color: var(--gold);
-          font-size: 1.5rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .no-images {
-          color: rgba(255, 248, 231, 0.7);
-          text-align: center;
-          padding: 3rem;
-        }
-
-        .admin-gallery-grid {
+        .images-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
           gap: 1.5rem;
         }
 
-        .admin-gallery-item {
-          background: var(--dark-gray);
-          border: 1px solid rgba(212, 175, 55, 0.2);
-          border-radius: 8px;
+        .image-card {
+          background: #F5F6F0;
+          border-radius: 12px;
           overflow: hidden;
           transition: all 0.3s;
+          border: 2px solid transparent;
         }
 
-        .admin-gallery-item:hover {
-          border-color: var(--gold);
+        .image-card:hover {
           transform: translateY(-4px);
+          box-shadow: 0 12px 32px rgba(99, 107, 47, 0.2);
+          border-color: var(--primary);
         }
 
-        .admin-image-wrapper {
+        .image-wrapper {
           position: relative;
-          aspect-ratio: 1;
+          aspect-ratio: 4/3;
           overflow: hidden;
         }
 
-        .admin-image-wrapper img {
+        .image {
           width: 100%;
           height: 100%;
           object-fit: cover;
@@ -912,299 +789,141 @@ export default function AdminDashboard() {
 
         .landing-badge {
           position: absolute;
-          top: 10px;
-          right: 10px;
-          background: var(--gold);
-          color: var(--black);
-          padding: 0.3rem 0.8rem;
+          top: 0.75rem;
+          right: 0.75rem;
+          background: var(--primary);
+          color: white;
+          padding: 0.375rem 0.75rem;
+          border-radius: 20px;
           font-size: 0.75rem;
           font-weight: 600;
-          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          gap: 0.375rem;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
-        .admin-image-actions {
-          padding: 0.8rem;
+        .image-actions {
           display: flex;
+          padding: 0.75rem;
           gap: 0.5rem;
         }
 
-        .toggle-landing-btn,
-        .delete-btn {
+        .btn-action {
           flex: 1;
-          padding: 0.5rem;
-          border: none;
+          padding: 0.625rem;
+          background: white;
+          border: 1px solid rgba(99, 107, 47, 0.2);
+          border-radius: 6px;
           cursor: pointer;
-          font-weight: 600;
-          border-radius: 4px;
-          transition: all 0.3s;
-        }
-
-        .toggle-landing-btn {
-          background: rgba(212, 175, 55, 0.2);
-          color: var(--gold);
-          font-size: 1.2rem;
-        }
-
-        .toggle-landing-btn:hover {
-          background: var(--gold);
-          color: var(--black);
-        }
-
-        .delete-btn {
-          background: rgba(220, 53, 69, 0.2);
-          color: #ff6b6b;
-        }
-
-        .delete-btn:hover {
-          background: rgba(220, 53, 69, 0.4);
-        }
-
-        .admin-loading {
-          min-height: 100vh;
+          transition: all 0.2s;
           display: flex;
           align-items: center;
           justify-content: center;
-          background: var(--black);
-          color: var(--gold);
+          color: #5A6333;
+        }
+
+        .btn-action:hover {
+          background: rgba(99, 107, 47, 0.1);
+          border-color: var(--primary);
+          color: var(--primary);
+        }
+
+        .btn-action.active {
+          background: var(--primary);
+          border-color: var(--primary);
+          color: white;
+        }
+
+        .btn-delete {
+          color: #dc3545;
+        }
+
+        .btn-delete:hover {
+          background: rgba(220, 53, 69, 0.1);
+          border-color: #dc3545;
+        }
+
+        .loading-state,
+        .empty-state {
+          text-align: center;
+          padding: 4rem 2rem;
+          color: #5A6333;
+        }
+
+        .loading-spinner {
+          width: 48px;
+          height: 48px;
+          border: 4px solid rgba(99, 107, 47, 0.1);
+          border-top-color: var(--primary);
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+          margin: 0 auto 1rem;
+        }
+
+        .empty-state svg {
+          color: rgba(99, 107, 47, 0.3);
+          margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
           font-size: 1.5rem;
+          color: #2C3318;
+          margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+          color: #5A6333;
         }
 
         @media (max-width: 768px) {
-          .admin-header {
-            position: relative;
-          }
-
-          .admin-header-content {
+          .admin-container {
             padding: 0 1rem;
-            flex-direction: row;
-            justify-content: space-between;
           }
 
-          .admin-logo {
-            flex-direction: row;
-            gap: 0.75rem;
+          .header-content {
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem 0;
           }
 
-          .admin-logo h1 {
-            font-size: 1.2rem;
+          .logo-section {
+            width: 100%;
           }
 
-          .desktop-menu {
+          .logo-divider {
             display: none;
           }
 
-          .mobile-menu-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+          .header-actions {
+            width: 100%;
+            flex-wrap: wrap;
           }
 
-          .mobile-menu-dropdown {
-            display: block;
+          .user-name {
+            width: 100%;
+            padding: 0.5rem;
+            text-align: center;
+            border: none;
+            border-bottom: 1px solid rgba(99, 107, 47, 0.2);
           }
 
-          .mobile-menu-overlay {
-            display: block;
+          .stats-grid {
+            grid-template-columns: 1fr;
           }
 
-          .admin-main {
-            padding: 1rem;
-          }
-
-          .admin-category-selector {
-            padding: 1.25rem 1.5rem;
-          }
-
-          .admin-category-selector label {
-            font-size: 1rem;
-          }
-
-          .category-dropdown {
-            font-size: 0.95rem;
-            padding: 0.9rem 1rem;
-          }
-
-          .admin-upload-section {
-            padding: 1.5rem 1rem;
-          }
-
-          .upload-header {
+          .section-header {
             flex-direction: column;
             align-items: flex-start;
-          }
-
-          .upload-title-group h2 {
-            font-size: 1.2rem;
-          }
-
-          .upload-icon {
-            width: 24px;
-            height: 24px;
-          }
-
-          .progress-bar-container {
-            width: 120px;
-          }
-
-          .file-input-label {
-            padding: 2rem 1.5rem;
-          }
-
-          .upload-cloud-icon {
-            width: 40px;
-            height: 40px;
-          }
-
-          .file-label-text strong {
-            font-size: 1rem;
-          }
-
-          .upload-options {
-            flex-direction: column;
-            align-items: stretch;
-          }
-
-          .checkbox-wrapper {
-            width: 100%;
-            justify-content: center;
-          }
-
-          .upload-submit-btn {
-            width: 100%;
-            padding: 1rem;
-          }
-
-          .admin-gallery-section h2 {
-            font-size: 1.2rem;
-          }
-
-          .admin-gallery-grid {
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 1rem;
           }
 
-          .admin-image-actions {
-            flex-direction: column;
+          .images-grid {
+            grid-template-columns: 1fr;
           }
 
-          .toggle-landing-btn,
-          .delete-btn {
-            width: 100%;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .admin-header {
-            padding: 0.5rem 0;
-          }
-
-          .admin-header-content {
-            padding: 0 0.75rem;
-          }
-
-          .admin-logo h1 {
-            font-size: 1rem;
-          }
-
-          .mobile-menu-toggle {
-            width: 36px;
-            height: 36px;
-          }
-
-          .mobile-menu-toggle svg {
-            width: 24px;
-            height: 24px;
-          }
-
-          .mobile-menu-dropdown {
-            min-width: 200px;
-          }
-
-          .mobile-menu-item {
-            padding: 0.85rem 1.25rem;
-            font-size: 0.95rem;
-          }
-
-          .mobile-menu-item svg {
-            width: 18px;
-            height: 18px;
-          }
-
-          .admin-main {
-            padding: 0.75rem;
-          }
-
-          .admin-category-selector {
-            padding: 1rem;
-          }
-
-          .admin-category-selector label {
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-          }
-
-          .category-dropdown {
-            font-size: 0.85rem;
-            padding: 0.75rem 0.85rem;
-            padding-right: 2.5rem;
-          }
-
-          .admin-upload-section {
-            padding: 1.25rem 0.75rem;
-          }
-
-          .upload-title-group h2 {
-            font-size: 1.1rem;
-          }
-
-          .upload-icon {
-            width: 20px;
-            height: 20px;
-          }
-
-          .progress-bar-container {
-            width: 100px;
-          }
-
-          .progress-text {
-            font-size: 0.8rem;
-          }
-
-          .file-input-label {
-            padding: 1.75rem 1rem;
-          }
-
-          .upload-cloud-icon {
-            width: 36px;
-            height: 36px;
-          }
-
-          .file-label-text strong {
-            font-size: 0.95rem;
-          }
-
-          .file-label-text small {
-            font-size: 0.75rem;
-          }
-
-          .checkbox-wrapper {
-            padding: 0.65rem 1rem;
-            font-size: 0.9rem;
-          }
-
-          .star-icon {
-            width: 16px;
-            height: 16px;
-          }
-
-          .upload-submit-btn {
-            font-size: 0.9rem;
-            padding: 0.9rem;
-          }
-
-          .admin-gallery-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.75rem;
+          .upload-card {
+            padding: 2rem 1rem;
           }
         }
       `}</style>
