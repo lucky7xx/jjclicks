@@ -1,26 +1,49 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Hero() {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <section id="home" className="hero">
+      <div className="hero-background" style={{ transform: `translateY(${scrollY * 0.5}px)` }}>
+        <div className="hero-overlay"></div>
+      </div>
+
       <div className="hero-content">
-        <h1>Capturing Moments,<br />Creating Memories</h1>
-        <p className="hero-tagline">Professional Photography & Videography</p>
-        <p>
-          Every frame tells a story. We specialize in turning your precious moments into timeless
-          masterpieces through the art of photography and videography. Follow us on Instagram{' '}
-          <a
-            href="https://instagram.com/lv_clicks_"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: 'var(--gold)', textDecoration: 'none', fontWeight: 600 }}
-          >
-            @lv_clicks_
-          </a>
+        <h1 className="hero-main-title">JJ Clicks</h1>
+
+        <p className="hero-tagline">
+          Create Your Memories With Our Passion
         </p>
+
+        <p className="hero-description">
+          Professional photography and videography services that capture the essence of your special moments
+        </p>
+
         <div className="cta-buttons">
-          <Link href="#portfolio" className="cta-button">View Portfolio</Link>
-          <Link href="#contact" className="cta-button cta-button-outline">Get in Touch</Link>
+          <Link href="#portfolio" className="cta-button cta-primary">
+            View Our Work
+            <span className="button-arrow">→</span>
+          </Link>
+          <Link href="#contact" className="cta-button cta-secondary">
+            Get In Touch
+          </Link>
+        </div>
+
+        <div className="hero-scroll-indicator">
+          <div className="scroll-mouse">
+            <div className="scroll-wheel"></div>
+          </div>
+          <span>Scroll to explore</span>
         </div>
       </div>
     </section>

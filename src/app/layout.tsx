@@ -3,7 +3,7 @@ import "./globals.css";
 import Providers from "@/components/Providers";
 
 export const metadata: Metadata = {
-  title: "LV Clicks | Lens Video Productions - Professional Photography & Videography",
+  title: "JJ Clicks - Professional Photography & Videography",
   description: "Professional photography and videography services. Capturing moments, creating memories. Weddings, events, portraits, and cinematic videos.",
 };
 

@@ -116,25 +116,17 @@ export default function Portfolio() {
   return (
     <>
       <section id="portfolio" className="portfolio">
-        <h2 className="section-title">Portfolio</h2>
-        <p className="section-subtitle">A glimpse of our finest work</p>
-        <div className="instagram-cta">
-          <p>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '8px' }}>
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-            </svg>
-            Follow us on{' '}
-            <a
-              href="https://instagram.com/lv_clicks_"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="instagram-link"
-            >
-              @lv_clicks_
-            </a>{' '}
-            for our latest work!
+        <div className="portfolio-header">
+          <span className="section-label">Our Work</span>
+          <h2 className="section-title">
+            Captured Moments
+            <span className="title-accent"> That Last Forever</span>
+          </h2>
+          <p className="section-description">
+            Explore our diverse portfolio showcasing weddings, events, and intimate moments
           </p>
         </div>
+
         <div className="portfolio-grid">
           {portfolioData.map((item) => (
             <div
@@ -143,50 +135,71 @@ export default function Portfolio() {
               onClick={() => item.count > 0 && openModal(item.category)}
               style={{ cursor: item.count > 0 ? 'pointer' : 'default' }}
             >
-              {item.image ? (
-                <>
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    width={600}
-                    height={600}
-                    className="portfolio-image"
-                  />
-                  <div className="portfolio-overlay">
-                    <h3>{item.title}</h3>
-                    <p>{item.subtitle}</p>
-                    {item.count > 0 && (
-                      <button className="view-more-btn">
-                        View {item.count} {item.count === 1 ? 'Photo' : 'Photos'}
-                      </button>
-                    )}
+              <div className="portfolio-image-wrapper">
+                {item.image ? (
+                  <>
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      width={600}
+                      height={600}
+                      className="portfolio-image"
+                    />
+                    <div className="portfolio-overlay">
+                      <div className="portfolio-overlay-content">
+                        <h3>{item.title}</h3>
+                        <p>{item.subtitle}</p>
+                        {item.count > 0 && (
+                          <button className="view-more-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <circle cx="11" cy="11" r="8"/>
+                              <path d="m21 21-4.35-4.35"/>
+                            </svg>
+                            View Gallery
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="portfolio-placeholder">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                      <circle cx="8.5" cy="8.5" r="1.5"/>
+                      <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    <p>Coming Soon</p>
                   </div>
-                </>
-              ) : (
-                <div className="portfolio-placeholder">
-                  <p>No images yet</p>
+                )}
+              </div>
+              <div className="portfolio-info">
+                <div className="portfolio-info-text">
+                  <h4>{item.title}</h4>
+                  <p>{item.subtitle}</p>
                 </div>
-              )}
-              <div className="portfolio-title-bar">
-                <h4>{item.title}</h4>
-                <span className="portfolio-count">{item.count} photos</span>
+                <span className="portfolio-count">{item.count}</span>
               </div>
             </div>
           ))}
         </div>
-        <div className="portfolio-note">
-          <p>
-            For more recent work and behind-the-scenes content, visit our{' '}
-            <a
-              href="https://instagram.com/lv_clicks_"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="instagram-link"
-            >
-              Instagram profile
-            </a>
-            .
-          </p>
+
+        <div className="portfolio-cta">
+          <div className="instagram-badge">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            <div>
+              <p className="instagram-text">Follow us on Instagram</p>
+              <a
+                href="https://instagram.com/j_j_clicks"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="instagram-handle"
+              >
+                @j_j_clicks
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 

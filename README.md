@@ -1,6 +1,6 @@
-# LV Clicks - Professional Photography Portfolio
+# JJ Clicks - Professional Photography Portfolio
 
-A modern, full-stack Next.js website for **LV Clicks - Lens Video Productions** featuring a complete admin panel for managing portfolio images.
+A modern, full-stack Next.js website for **JJ Clicks** featuring a complete admin panel for managing portfolio images.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
@@ -12,7 +12,7 @@ A modern, full-stack Next.js website for **LV Clicks - Lens Video Productions** 
 ## ✨ Features
 
 ### Public Website
-- 🎨 Beautiful gold & black themed design
+- 🎨 Beautiful coral orange & blue themed design
 - 📱 Fully responsive (mobile, tablet, desktop)
 - 🖼️ 8 portfolio categories
 - 🎬 Smooth animations and transitions
@@ -71,7 +71,7 @@ Open [http://localhost:3000](http://localhost:3000)
 - **Database**: MongoDB Atlas (Free tier)
 - **Image Storage**: Cloudinary (Free tier)
 - **Authentication**: NextAuth.js
-- **Styling**: Custom CSS (gold & black theme)
+- **Styling**: Custom CSS (coral orange & blue theme)
 - **Fonts**: Google Fonts (Oswald & Lato)
 
 ---
@@ -166,7 +166,7 @@ Or connect your GitHub repo to Vercel for automatic deployments.
 ## 📱 Screenshots
 
 ### Public Website
-- Hero section with animated gold shimmer text
+- Hero section with animated shimmer text
 - Portfolio grid with 8 categories
 - Modal gallery for viewing all images
 - Contact form
@@ -184,26 +184,27 @@ Or connect your GitHub repo to Vercel for automatic deployments.
 ## 🎨 Color Theme
 
 ```css
---gold: #D4AF37
---dark-gold: #B8941E
---light-gold: #F4E5C3
+--primary: #FF6B35      /* Coral Orange */
+--dark-primary: #E55A2B
+--light-primary: #FFB5A0
+--accent: #004E89       /* Deep Blue */
+--light-accent: #1A6DB5
 --black: #0A0A0A
 --dark-gray: #1A1A1A
---brown: #3E2723
---cream: #FFF8E7
+--cream: #F7F7FF
 ```
 
 ---
 
 ## 🤝 Contributing
 
-This is a private project for LV Clicks - Lens Video Productions.
+This is a private project for JJ Clicks.
 
 ---
 
 ## 📄 License
 
-All rights reserved - LV Clicks - Lens Video Productions © 2025
+All rights reserved - JJ Clicks © 2025
 
 ---
 
@@ -220,7 +221,7 @@ Having issues? Check:
 ## ✨ Credits
 
 - **Design & Development**: [mystiq.tech](https://mystiq.tech)
-- **Photography**: LV Clicks - Lens Video Productions
+- **Photography**: JJ Clicks
 - **Built with**: Next.js, MongoDB, Cloudinary
 
 ---

@@ -40,10 +40,10 @@ export default function AdminLogin() {
     <div className="admin-login-container">
       <div className="admin-login-box">
         <div className="admin-login-logo">
-          <Image src="/lv-logo.png" alt="LV Clicks" width={120} height={60} priority />
+          <Image src="/jjlogowhite.png" alt="JJ Clicks" width={120} height={60} priority />
         </div>
         <h1>Admin Login</h1>
-        <p className="admin-login-subtitle">LV Clicks Portfolio Management</p>
+        <p className="admin-login-subtitle">JJ Clicks Portfolio Management</p>
 
         {error && <div className="admin-error-message">{error}</div>}
 
@@ -56,7 +56,7 @@ export default function AdminLogin() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="admin@lvclicks.com"
+              placeholder="admin@jjclicks.com"
             />
           </div>
 

@@ -11,62 +11,113 @@ export default function Contact() {
 
   return (
     <section id="contact" className="contact">
-      <h2 className="section-title">Get in Touch</h2>
-      <p className="section-subtitle">Let&apos;s create something beautiful together</p>
-      <div className="contact-content">
-        <form className="contact-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name" name="name" required />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-          <div className="form-group">
-            <label htmlFor="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="service">Service Interested In</label>
-            <input type="text" id="service" name="service" placeholder="e.g., Wedding Photography" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="message">Message</label>
-            <textarea id="message" name="message" required></textarea>
-          </div>
-          <button type="submit" className="submit-btn">Send Message</button>
-        </form>
+      <div className="contact-header">
+        <span className="section-label">Contact Us</span>
+        <h2 className="section-title">
+          Let's Create
+          <span className="title-accent"> Together</span>
+        </h2>
+        <p className="section-description">
+          Ready to capture your special moments? Get in touch with us today
+        </p>
+      </div>
 
-        <div className="contact-info">
-          <div className="contact-item">
-            <div className="contact-item-icon">
-              <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                <path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 318.746 70.425 290.349 48 272.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z" />
-              </svg>
+      <div className="contact-container">
+        <div className="contact-left">
+          <div className="contact-info-cards">
+            <div className="contact-info-card">
+              <div className="contact-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div className="contact-card-content">
+                <h4>Email Us</h4>
+                <a href="mailto:info@jjclicks.com">info@jjclicks.com</a>
+              </div>
             </div>
-            <p>
-              <a href="mailto:info@lvclicks.com">info@lvclicks.com</a>
-            </p>
-          </div>
-          <div className="contact-item">
-            <div className="contact-item-icon">
-              <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />
-              </svg>
+
+            <div className="contact-info-card">
+              <div className="contact-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </div>
+              <div className="contact-card-content">
+                <h4>Call Us</h4>
+                <a href="tel:+919428012269">+91 6354763515</a>
+              </div>
             </div>
-            <p>
-              <a href="tel:+919428012269">+91 94280 12269</a>
-            </p>
-          </div>
-          <div className="contact-item">
-            <div className="contact-item-icon">
-              <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
-                <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
-              </svg>
+
+            <div className="contact-info-card">
+              <div className="contact-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <div className="contact-card-content">
+                <h4>Visit Us</h4>
+                <p>Lunawada, Gujarat</p>
+              </div>
             </div>
-            <p>Vadodara, Gujarat</p>
           </div>
+
+          <div className="contact-social">
+            <h4>Follow Us</h4>
+            <div className="social-links-contact">
+              <a href="https://instagram.com/j_j_clicks" target="_blank" rel="noopener noreferrer" className="social-link-contact">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+                Instagram
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="contact-right">
+          <form className="contact-form" onSubmit={handleSubmit}>
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="John Doe" required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required />
+              </div>
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="john@example.com" required />
+            </div>
+            <div className="form-group">
+              <label htmlFor="service">Service You Need</label>
+              <select id="service" name="service" required>
+                <option value="">Select a service</option>
+                <option value="wedding">Wedding Photography</option>
+                <option value="pre-wedding">Pre-Wedding Shoot</option>
+                <option value="event">Event Coverage</option>
+                <option value="portrait">Portrait Photography</option>
+                <option value="cinematic">Cinematic Video</option>
+                <option value="maternity">Maternity Photography</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="message">Your Message</label>
+              <textarea id="message" name="message" rows={4} placeholder="Tell us about your project..." required></textarea>
+            </div>
+            <button type="submit" className="submit-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"/>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+              Send Message
+            </button>
+          </form>
         </div>
       </div>
     </section>

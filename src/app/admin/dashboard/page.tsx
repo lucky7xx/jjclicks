@@ -180,7 +180,7 @@ export default function AdminDashboard() {
       <header className="admin-header">
         <div className="admin-header-content">
           <div className="admin-logo">
-            <Image src="/lv-logo.png" alt="LV Clicks" width={80} height={40} />
+            <Image src="/jjlogowhite.png" alt="JJ Clicks" width={80} height={40} />
             <h1>Admin Dashboard</h1>
           </div>
 
